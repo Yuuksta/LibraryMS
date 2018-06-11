@@ -20,6 +20,7 @@ public:
     ~ReaderWindow();
     void ShowAboutMe();
     bool checkQualification();
+    void ShowMe();
 
 public slots:
     void ShowBookInfo();

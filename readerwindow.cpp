@@ -16,6 +16,7 @@ ReaderWindow::ReaderWindow(QString uid, QWidget *parent) :
     connect(ui->renewBookButton, SIGNAL(clicked(bool)), SLOT(RenewBook()));
     connect(ui->payButtom, SIGNAL(clicked(bool)), SLOT(PayTicket()));
     ui->dateTimeEdit->setMinimumDateTime(QDateTime::currentDateTime());
+    ShowMe();
     Refresh();
 }
 
@@ -302,4 +303,13 @@ void ReaderWindow::Refresh() {
     ShowTicket();
     ShowBorrowedBooks();
     ShowBookInfo();
+}
+
+void ReaderWindow::ShowMe() {
+    QSqlQuery result;
+    result = DataBase::ExecuteQuery("select RNAME,MAJOR from READER where RID = " + this->UID);
+    result.next();
+    ui->nameLabel->setText(result.value(0).toString());
+    ui->idLabel->setText(UID);
+    ui->majorLabel->setText(result.value(1).toString());
 }
