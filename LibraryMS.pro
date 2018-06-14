@@ -53,3 +53,5 @@ FORMS += \
     addreader.ui \
     modifyreader.ui \
     renew.ui
+
+DISTFILES +=
