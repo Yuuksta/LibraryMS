@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>RenewBook</string>
   </property>
   <widget class="QDateTimeEdit" name="dateTimeEdit">
    <property name="geometry">

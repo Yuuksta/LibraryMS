@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>LibraryMS</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -74,6 +74,9 @@
       <width>201</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
     </property>
    </widget>
    <widget class="QLabel" name="pswLble">

@@ -175,17 +175,25 @@ void ReaderWindow::Borrow() {
                     QMessageBox::question(NULL,"Warning","sure to borrow:\n" + result.value(1).toString(),
                                           QMessageBox::Yes | QMessageBox::No);
             if(buttom == QMessageBox::Yes) {
-                qDebug() << "Borrow!";
-                //minus book mount
-                DataBase::ExecuteQuery("update BOOK set MOUNT = " + QString::number(mount - 1) + " where BID = " + currentBID);
+                result = DataBase::ExecuteQuery("select COUNT(*) from BORROW where "
+                                                "RID = " + this->UID + " and BID = " + currentBID);
+                result.next();
+                if(result.value(0).toInt() != 0) { //duplicate borrow
+                    QMessageBox::information(this, "Warning", "you have borrowed this book!");
+                }
+                else {
+                    qDebug() << "Borrow!";
+                    //minus book mount
+                    DataBase::ExecuteQuery("update BOOK set MOUNT = " + QString::number(mount - 1) + " where BID = " + currentBID);
 
-                //update borrow table
-                DataBase::ExecuteQuery("insert into BORROW values(" + this->UID +"," + currentBID + ",now(),'" + ddlString + "')");
+                    //update borrow table
+                    DataBase::ExecuteQuery("insert into BORROW values(" + this->UID +"," + currentBID + ",now(),'" + ddlString + "')");
 
-                //update log table
-                DataBase::ExecuteQuery("insert into LOG values(" + currentLID + "," + this->UID + "," +
-                                       currentBID + ",now(),'borrow')");
-                Refresh();
+                    //update log table
+                    DataBase::ExecuteQuery("insert into LOG values(" + currentLID + "," + this->UID + "," +
+                                           currentBID + ",now(),'borrow')");
+                    Refresh();
+                }
             }
             else {
                 qDebug() << "NO!";
